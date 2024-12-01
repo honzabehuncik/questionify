@@ -9,8 +9,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: "#7371FF",
+        secondary: "#5C5C5C",
+        background: "#0F0F0F",
+        text: "#FFFFFF",
+        highlight: "#8DF0F6",
+      },
+      fontFamily: {
+        montserrat: ["Montserrat", "sans-serif"],
+      },
+      animation: {
+        'gradient': 'gradient 5s linear infinite',
+      },
+      keyframes: {
+        'gradient': {
+          to: { 'background-position': '200% center' },
+        }
       },
     },
   },

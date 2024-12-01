@@ -1,101 +1,71 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import { useSessionHandlers } from "../hooks/useSessionHandlers";
+import Particles from "@/components/particles";
+import Spotlight from "@/components/spotlight";
+import { SpotlightCard } from "@/components/spotlight";
+
+export default function HomePage() {
+  const [sessionId, setSessionId] = useState("");
+  const { loading, error, joinSession, createSession } = useSessionHandlers();
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen text-text font-montserrat relative">
+      <div className="container mx-auto px-6">
+        <nav className="flex justify-between items-center py-4">
+          <h1 className="text-2xl font-bold text-primary">Questionify</h1>
+          <div className="flex space-x-4">
+            <button className="bg-white text-black px-6 py-2 rounded-full font-semibold transition duration-300 ease-in-out hover:bg-gray-200">
+              Přihlásit se
+            </button>
+            <button className="bg-primary text-white px-6 py-2 rounded-full font-semibold transition duration-300 ease-in-out hover:bg-primary/80">
+              Registrovat se
+            </button>
+          </div>
+        </nav>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+        <div className="flex flex-col items-start justify-center h-[80vh]">
+        <h2 className="text-xl mb-2 font-semibold bg-clip-text text-transparent bg-[linear-gradient(to_right,theme(colors.rose.100),theme(colors.violet.400),theme(colors.fuchsia.400),theme(colors.violet.400),theme(colors.rose.100))] bg-[length:200%_auto] animate-gradient">Interaktivní nástroj pro vaše události</h2>
+        <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            Začněte tím, že zadáte <br /> PIN události
+          </h1>
+          <div className="flex items-center w-full max-w-md space-x-2">
+            <input
+              type="text"
+              placeholder="Zadejte PIN události"
+              className="flex-grow bg-white text-black placeholder-secondary px-6 py-4 rounded-full outline-none text-lg"
+              value={sessionId}
+              onChange={(e) => setSessionId(e.target.value)}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <button
+            onClick={() => joinSession(sessionId)}
+            className="relative inline-flex justify-center items-center px-6 py-4 rounded-full font-semibold text-white bg-primary transition duration-300 ease-in-out hover:bg-primary/80 before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white/.5)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:[transition:background-position_0s_ease] hover:before:bg-[position:-100%_0,0_0] hover:before:duration-[1000ms]"
           >
-            Read our docs
-          </a>
+            Připojit se
+          </button>
+          </div>
+          {error && <p className="text-red-500 mt-4">{error}</p>}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div className="flex justify-center lg">
+        <div className="bg-white/10 backdrop-blur-md px-5 py-4 rounded-full text-center flex items-center space-x-5 overflow-hidden max-w-xl border border-white/20">
+          <p className="text-lg">
+            Nebo vytvořte událost na <span className="text-primary">Questionify</span>
+          </p>
+          <button
+            onClick={createSession}
+            className="bg-primary text-white px-4 py-3 rounded-full font-semibold whitespace-nowrap transition duration-300 ease-in-out hover:bg-primary/80"
+          >
+            {loading ? "Vytvářím..." : "Vytvořit událost"}
+          </button>
+        </div>
+      </div>
+
+      </div>
+      <Particles className="absolute -z-10 inset-0 pointer-events-none" quantity={50} />      
+      <div className="absolute inset-0 -z-20 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#0a0a0a_50%,#6849E1_100%)]"></div>
+
     </div>
   );
 }
