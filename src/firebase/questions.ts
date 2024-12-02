@@ -10,6 +10,8 @@ export async function addQuestion(sessionId: string, text: string) {
   await addDoc(questionsRef, {
     text,
     votes: 0,
+    isHighlighted: false,
+    isAnswered: false,
     createdAt: serverTimestamp(),
   });
 }
@@ -39,5 +41,27 @@ export async function voteQuestion(sessionId: string, questionId: string, hasVot
   const questionRef = doc(db, `sessions/${sessionId}/questions`, questionId);
   await updateDoc(questionRef, {
     votes: increment(hasVoted ? -1 : 1),
+  });
+}
+
+// Update question highlight status
+export async function updateHighlight(sessionId: string, questionId: string, isHighlighted: boolean) {
+  if (!sessionId || sessionId.trim() === "") {
+    throw new Error("Invalid sessionId");
+  }
+  const questionRef = doc(db, `sessions/${sessionId}/questions`, questionId);
+  await updateDoc(questionRef, {
+    isHighlighted: !isHighlighted, // Toggle the highlighted status
+  });
+}
+
+// Update question answered status
+export async function updateAnswered(sessionId: string, questionId: string) {
+  if (!sessionId || sessionId.trim() === "") {
+    throw new Error("Invalid sessionId");
+  }
+  const questionRef = doc(db, `sessions/${sessionId}/questions`, questionId);
+  await updateDoc(questionRef, {
+    isAnswered: true, // Mark the question as answered
   });
 }
