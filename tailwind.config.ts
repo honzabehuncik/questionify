@@ -21,10 +21,15 @@ export default {
       },
       animation: {
         'gradient': 'gradient 5s linear infinite',
+        'pump': 'pump 10s infinite'
       },
       keyframes: {
         'gradient': {
           to: { 'background-position': '200% center' },
+        },
+        'pump': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.1)' }
         }
       },
     },

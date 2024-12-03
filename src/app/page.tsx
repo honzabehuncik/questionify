@@ -4,30 +4,32 @@ import { useState } from "react";
 import { useSessionHandlers } from "../hooks/useSessionHandlers";
 import Particles from "@/components/particles";
 import Image from 'next/image';
-
+import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
   const [sessionId, setSessionId] = useState("");
   const { loading, error, joinSession, createSession } = useSessionHandlers();
+  const router = useRouter();
 
   return (
     <div className="min-h-screen text-text font-montserrat relative">
       <div className="container mx-auto px-6">
         <nav className="flex justify-between items-center py-4">
-        <div className="flex items-center">
-    <Image
-      src="/logo.svg"
-      alt="Questionify logo"
-      width={40}
-      height={40}
-    />
-  </div>
+          <div className="flex items-center">
+            <div onClick={() => router.push('/')} className="cursor-pointer">
+              <Image
+                src="/logo.svg"
+                alt="Questionify logo"
+                width={40}
+                height={40}
+              />
+            </div>
+          </div>
           <div className="flex space-x-4">
-            
             <button className="bg-primary text-white px-6 py-2 rounded-full font-semibold transition duration-300 ease-in-out hover:bg-primary/80" onClick={createSession}>
-            {loading ? "Vytvářím..." : "Vytvořit událost"}
+              {loading ? "Vytvářím..." : "Vytvořit událost"}
             </button>
-            <button className="bg-white text-black px-6 py-2 rounded-full font-semibold transition duration-300 ease-in-out hover:bg-gray-200">
+            <button className="bg-white text-black px-6 py-2 rounded-full font-semibold transition duration-300 ease-in-out hover:bg-gray-200" onClick={() => router.push('/chillGuy')}>
               Přihlásit se
             </button>
           </div>
@@ -73,7 +75,6 @@ export default function HomePage() {
       </div>
       <Particles className="absolute -z-10 inset-0 pointer-events-none" quantity={50} />
       <div className="absolute inset-0 -z-20 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#0a0a0a_50%,#6849E1_100%)]"></div>
-
     </div>
   );
 }

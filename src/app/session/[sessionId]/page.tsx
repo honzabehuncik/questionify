@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase/firebase";
 import AddQuestion from "../AddQuestion";
 import Questions from "../Questions";
 
-export default async function SessionPage({ params }: { params: { sessionId: string } }) {
+export default async function SessionPage({ params }: { params: Promise<{ sessionId: string}>} ) {
   const { sessionId } = await params;
 
   const sessionRef = doc(db, "sessions", sessionId);
