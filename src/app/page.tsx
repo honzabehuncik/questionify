@@ -23,11 +23,12 @@ export default function HomePage() {
     />
   </div>
           <div className="flex space-x-4">
+            
+            <button className="bg-primary text-white px-6 py-2 rounded-full font-semibold transition duration-300 ease-in-out hover:bg-primary/80" onClick={createSession}>
+            {loading ? "Vytvářím..." : "Vytvořit událost"}
+            </button>
             <button className="bg-white text-black px-6 py-2 rounded-full font-semibold transition duration-300 ease-in-out hover:bg-gray-200">
               Přihlásit se
-            </button>
-            <button className="bg-primary text-white px-6 py-2 rounded-full font-semibold transition duration-300 ease-in-out hover:bg-primary/80">
-              Registrovat se
             </button>
           </div>
         </nav>

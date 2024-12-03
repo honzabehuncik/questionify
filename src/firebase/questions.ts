@@ -2,19 +2,21 @@ import { collection, addDoc, serverTimestamp, onSnapshot, query, orderBy, doc, u
 import { db } from "./firebase";
 
 // Add question function
-export async function addQuestion(sessionId: string, text: string) {
+export async function addQuestion(sessionId: string, text: string, userName: string) {
   if (!sessionId || sessionId.trim() === "") {
     throw new Error("Invalid sessionId");
   }
   const questionsRef = collection(db, `sessions/${sessionId}/questions`);
   await addDoc(questionsRef, {
     text,
+    userName,
     votes: 0,
     isHighlighted: false,
     isAnswered: false,
     createdAt: serverTimestamp(),
   });
 }
+
 
 // Realtime question listener
 export function listenToQuestions(sessionId: string, callback: Function) {
